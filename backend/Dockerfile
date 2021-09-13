@@ -1,4 +1,4 @@
-FROM fedormelexin/graphql-engine-arm64:v2.0.1.cli-migrations-v3
+FROM hasura/graphql-engine:latest
 
 # Copy migrations directory
 COPY ./migrations /hasura-migrations

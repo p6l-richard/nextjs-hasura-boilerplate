@@ -3,7 +3,7 @@ version: "3"
 services:
   backend:
     container_name: nhb-backend
-    image: nhb-backend
+    image: hasura/graphql-engine:latest
     build:
       context: ./backend
     depends_on:
