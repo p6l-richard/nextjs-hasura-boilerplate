@@ -1,14 +1,14 @@
 import { Avatar, Box, Stack, Text } from "@chakra-ui/react";
 import timeFromNow from "lib/timeFromNow";
 import React, { FC } from "react";
-import IFeed from "types/feed";
+import IGame from "types/game";
 
 interface IProps {
-  feed: IFeed;
+  game: IGame;
 }
 
-const Feed: FC<IProps> = ({ feed }) => {
-  const authorNode = () => {
+const Game: FC<IProps> = ({ game }) => {
+  const userNode = () => {
     return (
       <Stack
         spacing={4}
@@ -17,19 +17,27 @@ const Feed: FC<IProps> = ({ feed }) => {
         p={4}
         borderBottomWidth={1}
       >
-        <Avatar name={feed.author.name} src={feed.author.image} />
+        <Avatar name={game.user.name} src={game.user.image} />
         <Stack>
-          <Text fontWeight="bold">{feed.author.name}</Text>
-          <Text>{timeFromNow(feed.created_at)}</Text>
+          <Text fontWeight="bold">{game.user.name}</Text>
+          <Text>{timeFromNow(game.created_at)}</Text>
         </Stack>
       </Stack>
+    );
+  };
+
+  const titleNode = () => {
+    return (
+      <Text fontWeight="bold" fontSize="md" p={4}>
+        {game.name}
+      </Text>
     );
   };
 
   const bodyNode = () => {
     return (
       <Text fontSize="md" p={4}>
-        {feed.body}
+        {game.description}
       </Text>
     );
   };
@@ -37,11 +45,12 @@ const Feed: FC<IProps> = ({ feed }) => {
   return (
     <Box shadow="lg" rounded="lg">
       <Stack spacing={0}>
-        {authorNode()}
+        {userNode()}
+        {titleNode()}
         {bodyNode()}
       </Stack>
     </Box>
   );
 };
 
-export default Feed;
+export default Game;

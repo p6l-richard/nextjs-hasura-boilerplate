@@ -1,5 +1,5 @@
 import AccessDeniedIndicator from "components/AccessDeniedIndicator";
-import Page from "components/Pages/Feeds";
+import Page from "components/Pages/Games";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import Head from "next/head";
@@ -10,7 +10,7 @@ interface IProps {
   session: ISession;
 }
 
-const FeedsPage: FC<IProps> = ({ session }) => {
+const GamesPage: FC<IProps> = ({ session }) => {
   if (!session) {
     return <AccessDeniedIndicator />;
   }
@@ -18,7 +18,7 @@ const FeedsPage: FC<IProps> = ({ session }) => {
   return (
     <>
       <Head>
-        <title>Feeds Page</title>
+        <title>Games Page</title>
       </Head>
       <Page />
     </>
@@ -35,4 +35,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   };
 };
 
-export default FeedsPage;
+export default GamesPage;
