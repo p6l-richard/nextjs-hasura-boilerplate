@@ -12,14 +12,15 @@ export type Maybe<T> = T | undefined;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 export type RequireFields<T, K extends keyof T> = {
   [X in Exclude<keyof T, K>]?: T[X];
-} &
-  { [P in K]-?: NonNullable<T[P]> };
+} & { [P in K]-?: NonNullable<T[P]> };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
@@ -290,187 +291,337 @@ export enum Accounts_Update_Column {
   UserId = "user_id",
 }
 
-/** columns and relationships of "feeds" */
-export type Feeds = {
-  __typename?: "feeds";
-  /** An object relationship */
-  author?: Maybe<Users>;
-  author_id: Scalars["uuid"];
-  body: Scalars["String"];
+/** columns and relationships of "games" */
+export type Games = {
+  __typename?: "games";
+  bgg_id: Scalars["Int"];
   created_at: Scalars["timestamptz"];
+  description?: Maybe<Scalars["String"]>;
   id: Scalars["uuid"];
+  image?: Maybe<Scalars["String"]>;
+  name: Scalars["String"];
   updated_at: Scalars["timestamptz"];
+  /** An object relationship */
+  user?: Maybe<Users>;
+  user_id?: Maybe<Scalars["uuid"]>;
 };
 
-/** aggregated selection of "feeds" */
-export type Feeds_Aggregate = {
-  __typename?: "feeds_aggregate";
-  aggregate?: Maybe<Feeds_Aggregate_Fields>;
-  nodes: Array<Feeds>;
+/** aggregated selection of "games" */
+export type Games_Aggregate = {
+  __typename?: "games_aggregate";
+  aggregate?: Maybe<Games_Aggregate_Fields>;
+  nodes: Array<Games>;
 };
 
-/** aggregate fields of "feeds" */
-export type Feeds_Aggregate_Fields = {
-  __typename?: "feeds_aggregate_fields";
+/** aggregate fields of "games" */
+export type Games_Aggregate_Fields = {
+  __typename?: "games_aggregate_fields";
+  avg?: Maybe<Games_Avg_Fields>;
   count: Scalars["Int"];
-  max?: Maybe<Feeds_Max_Fields>;
-  min?: Maybe<Feeds_Min_Fields>;
+  max?: Maybe<Games_Max_Fields>;
+  min?: Maybe<Games_Min_Fields>;
+  stddev?: Maybe<Games_Stddev_Fields>;
+  stddev_pop?: Maybe<Games_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Games_Stddev_Samp_Fields>;
+  sum?: Maybe<Games_Sum_Fields>;
+  var_pop?: Maybe<Games_Var_Pop_Fields>;
+  var_samp?: Maybe<Games_Var_Samp_Fields>;
+  variance?: Maybe<Games_Variance_Fields>;
 };
 
-/** aggregate fields of "feeds" */
-export type Feeds_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Feeds_Select_Column>>;
+/** aggregate fields of "games" */
+export type Games_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Games_Select_Column>>;
   distinct?: Maybe<Scalars["Boolean"]>;
 };
 
-/** order by aggregate values of table "feeds" */
-export type Feeds_Aggregate_Order_By = {
+/** order by aggregate values of table "games" */
+export type Games_Aggregate_Order_By = {
+  avg?: Maybe<Games_Avg_Order_By>;
   count?: Maybe<Order_By>;
-  max?: Maybe<Feeds_Max_Order_By>;
-  min?: Maybe<Feeds_Min_Order_By>;
+  max?: Maybe<Games_Max_Order_By>;
+  min?: Maybe<Games_Min_Order_By>;
+  stddev?: Maybe<Games_Stddev_Order_By>;
+  stddev_pop?: Maybe<Games_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Games_Stddev_Samp_Order_By>;
+  sum?: Maybe<Games_Sum_Order_By>;
+  var_pop?: Maybe<Games_Var_Pop_Order_By>;
+  var_samp?: Maybe<Games_Var_Samp_Order_By>;
+  variance?: Maybe<Games_Variance_Order_By>;
 };
 
-/** input type for inserting array relation for remote table "feeds" */
-export type Feeds_Arr_Rel_Insert_Input = {
-  data: Array<Feeds_Insert_Input>;
+/** input type for inserting array relation for remote table "games" */
+export type Games_Arr_Rel_Insert_Input = {
+  data: Array<Games_Insert_Input>;
   /** on conflict condition */
-  on_conflict?: Maybe<Feeds_On_Conflict>;
+  on_conflict?: Maybe<Games_On_Conflict>;
 };
 
-/** Boolean expression to filter rows from the table "feeds". All fields are combined with a logical 'AND'. */
-export type Feeds_Bool_Exp = {
-  _and?: Maybe<Array<Feeds_Bool_Exp>>;
-  _not?: Maybe<Feeds_Bool_Exp>;
-  _or?: Maybe<Array<Feeds_Bool_Exp>>;
-  author?: Maybe<Users_Bool_Exp>;
-  author_id?: Maybe<Uuid_Comparison_Exp>;
-  body?: Maybe<String_Comparison_Exp>;
+/** aggregate avg on columns */
+export type Games_Avg_Fields = {
+  __typename?: "games_avg_fields";
+  bgg_id?: Maybe<Scalars["Float"]>;
+};
+
+/** order by avg() on columns of table "games" */
+export type Games_Avg_Order_By = {
+  bgg_id?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "games". All fields are combined with a logical 'AND'. */
+export type Games_Bool_Exp = {
+  _and?: Maybe<Array<Games_Bool_Exp>>;
+  _not?: Maybe<Games_Bool_Exp>;
+  _or?: Maybe<Array<Games_Bool_Exp>>;
+  bgg_id?: Maybe<Int_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  description?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  image?: Maybe<String_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
+  user_id?: Maybe<Uuid_Comparison_Exp>;
 };
 
-/** unique or primary key constraints on table "feeds" */
-export enum Feeds_Constraint {
+/** unique or primary key constraints on table "games" */
+export enum Games_Constraint {
   /** unique or primary key constraint */
   FeedsPkey = "feeds_pkey",
+  /** unique or primary key constraint */
+  GamesBggIdKey = "games_bgg_id_key",
 }
 
-/** input type for inserting data into table "feeds" */
-export type Feeds_Insert_Input = {
-  author?: Maybe<Users_Obj_Rel_Insert_Input>;
-  author_id?: Maybe<Scalars["uuid"]>;
-  body?: Maybe<Scalars["String"]>;
+/** input type for incrementing numeric columns in table "games" */
+export type Games_Inc_Input = {
+  bgg_id?: Maybe<Scalars["Int"]>;
+};
+
+/** input type for inserting data into table "games" */
+export type Games_Insert_Input = {
+  bgg_id?: Maybe<Scalars["Int"]>;
   created_at?: Maybe<Scalars["timestamptz"]>;
+  description?: Maybe<Scalars["String"]>;
   id?: Maybe<Scalars["uuid"]>;
+  image?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
   updated_at?: Maybe<Scalars["timestamptz"]>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: Maybe<Scalars["uuid"]>;
 };
 
 /** aggregate max on columns */
-export type Feeds_Max_Fields = {
-  __typename?: "feeds_max_fields";
-  author_id?: Maybe<Scalars["uuid"]>;
-  body?: Maybe<Scalars["String"]>;
+export type Games_Max_Fields = {
+  __typename?: "games_max_fields";
+  bgg_id?: Maybe<Scalars["Int"]>;
   created_at?: Maybe<Scalars["timestamptz"]>;
+  description?: Maybe<Scalars["String"]>;
   id?: Maybe<Scalars["uuid"]>;
+  image?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
   updated_at?: Maybe<Scalars["timestamptz"]>;
+  user_id?: Maybe<Scalars["uuid"]>;
 };
 
-/** order by max() on columns of table "feeds" */
-export type Feeds_Max_Order_By = {
-  author_id?: Maybe<Order_By>;
-  body?: Maybe<Order_By>;
+/** order by max() on columns of table "games" */
+export type Games_Max_Order_By = {
+  bgg_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  image?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
-export type Feeds_Min_Fields = {
-  __typename?: "feeds_min_fields";
-  author_id?: Maybe<Scalars["uuid"]>;
-  body?: Maybe<Scalars["String"]>;
+export type Games_Min_Fields = {
+  __typename?: "games_min_fields";
+  bgg_id?: Maybe<Scalars["Int"]>;
   created_at?: Maybe<Scalars["timestamptz"]>;
+  description?: Maybe<Scalars["String"]>;
   id?: Maybe<Scalars["uuid"]>;
+  image?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
   updated_at?: Maybe<Scalars["timestamptz"]>;
+  user_id?: Maybe<Scalars["uuid"]>;
 };
 
-/** order by min() on columns of table "feeds" */
-export type Feeds_Min_Order_By = {
-  author_id?: Maybe<Order_By>;
-  body?: Maybe<Order_By>;
+/** order by min() on columns of table "games" */
+export type Games_Min_Order_By = {
+  bgg_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  image?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
 };
 
-/** response of any mutation on the table "feeds" */
-export type Feeds_Mutation_Response = {
-  __typename?: "feeds_mutation_response";
+/** response of any mutation on the table "games" */
+export type Games_Mutation_Response = {
+  __typename?: "games_mutation_response";
   /** number of rows affected by the mutation */
   affected_rows: Scalars["Int"];
   /** data from the rows affected by the mutation */
-  returning: Array<Feeds>;
+  returning: Array<Games>;
 };
 
-/** on conflict condition type for table "feeds" */
-export type Feeds_On_Conflict = {
-  constraint: Feeds_Constraint;
-  update_columns?: Array<Feeds_Update_Column>;
-  where?: Maybe<Feeds_Bool_Exp>;
+/** on conflict condition type for table "games" */
+export type Games_On_Conflict = {
+  constraint: Games_Constraint;
+  update_columns?: Array<Games_Update_Column>;
+  where?: Maybe<Games_Bool_Exp>;
 };
 
-/** Ordering options when selecting data from "feeds". */
-export type Feeds_Order_By = {
-  author?: Maybe<Users_Order_By>;
-  author_id?: Maybe<Order_By>;
-  body?: Maybe<Order_By>;
+/** Ordering options when selecting data from "games". */
+export type Games_Order_By = {
+  bgg_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  image?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
+  user_id?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: feeds */
-export type Feeds_Pk_Columns_Input = {
+/** primary key columns input for table: games */
+export type Games_Pk_Columns_Input = {
   id: Scalars["uuid"];
 };
 
-/** select columns of table "feeds" */
-export enum Feeds_Select_Column {
+/** select columns of table "games" */
+export enum Games_Select_Column {
   /** column name */
-  AuthorId = "author_id",
-  /** column name */
-  Body = "body",
+  BggId = "bgg_id",
   /** column name */
   CreatedAt = "created_at",
   /** column name */
+  Description = "description",
+  /** column name */
   Id = "id",
   /** column name */
+  Image = "image",
+  /** column name */
+  Name = "name",
+  /** column name */
   UpdatedAt = "updated_at",
+  /** column name */
+  UserId = "user_id",
 }
 
-/** input type for updating data in table "feeds" */
-export type Feeds_Set_Input = {
-  author_id?: Maybe<Scalars["uuid"]>;
-  body?: Maybe<Scalars["String"]>;
+/** input type for updating data in table "games" */
+export type Games_Set_Input = {
+  bgg_id?: Maybe<Scalars["Int"]>;
   created_at?: Maybe<Scalars["timestamptz"]>;
+  description?: Maybe<Scalars["String"]>;
   id?: Maybe<Scalars["uuid"]>;
+  image?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
   updated_at?: Maybe<Scalars["timestamptz"]>;
+  user_id?: Maybe<Scalars["uuid"]>;
 };
 
-/** update columns of table "feeds" */
-export enum Feeds_Update_Column {
+/** aggregate stddev on columns */
+export type Games_Stddev_Fields = {
+  __typename?: "games_stddev_fields";
+  bgg_id?: Maybe<Scalars["Float"]>;
+};
+
+/** order by stddev() on columns of table "games" */
+export type Games_Stddev_Order_By = {
+  bgg_id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Games_Stddev_Pop_Fields = {
+  __typename?: "games_stddev_pop_fields";
+  bgg_id?: Maybe<Scalars["Float"]>;
+};
+
+/** order by stddev_pop() on columns of table "games" */
+export type Games_Stddev_Pop_Order_By = {
+  bgg_id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Games_Stddev_Samp_Fields = {
+  __typename?: "games_stddev_samp_fields";
+  bgg_id?: Maybe<Scalars["Float"]>;
+};
+
+/** order by stddev_samp() on columns of table "games" */
+export type Games_Stddev_Samp_Order_By = {
+  bgg_id?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Games_Sum_Fields = {
+  __typename?: "games_sum_fields";
+  bgg_id?: Maybe<Scalars["Int"]>;
+};
+
+/** order by sum() on columns of table "games" */
+export type Games_Sum_Order_By = {
+  bgg_id?: Maybe<Order_By>;
+};
+
+/** update columns of table "games" */
+export enum Games_Update_Column {
   /** column name */
-  AuthorId = "author_id",
-  /** column name */
-  Body = "body",
+  BggId = "bgg_id",
   /** column name */
   CreatedAt = "created_at",
   /** column name */
+  Description = "description",
+  /** column name */
   Id = "id",
   /** column name */
+  Image = "image",
+  /** column name */
+  Name = "name",
+  /** column name */
   UpdatedAt = "updated_at",
+  /** column name */
+  UserId = "user_id",
 }
+
+/** aggregate var_pop on columns */
+export type Games_Var_Pop_Fields = {
+  __typename?: "games_var_pop_fields";
+  bgg_id?: Maybe<Scalars["Float"]>;
+};
+
+/** order by var_pop() on columns of table "games" */
+export type Games_Var_Pop_Order_By = {
+  bgg_id?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Games_Var_Samp_Fields = {
+  __typename?: "games_var_samp_fields";
+  bgg_id?: Maybe<Scalars["Float"]>;
+};
+
+/** order by var_samp() on columns of table "games" */
+export type Games_Var_Samp_Order_By = {
+  bgg_id?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Games_Variance_Fields = {
+  __typename?: "games_variance_fields";
+  bgg_id?: Maybe<Scalars["Float"]>;
+};
+
+/** order by variance() on columns of table "games" */
+export type Games_Variance_Order_By = {
+  bgg_id?: Maybe<Order_By>;
+};
 
 /** mutation root */
 export type Mutation_Root = {
@@ -479,10 +630,10 @@ export type Mutation_Root = {
   delete_accounts?: Maybe<Accounts_Mutation_Response>;
   /** delete single row from the table: "accounts" */
   delete_accounts_by_pk?: Maybe<Accounts>;
-  /** delete data from the table: "feeds" */
-  delete_feeds?: Maybe<Feeds_Mutation_Response>;
-  /** delete single row from the table: "feeds" */
-  delete_feeds_by_pk?: Maybe<Feeds>;
+  /** delete data from the table: "games" */
+  delete_games?: Maybe<Games_Mutation_Response>;
+  /** delete single row from the table: "games" */
+  delete_games_by_pk?: Maybe<Games>;
   /** delete data from the table: "sessions" */
   delete_sessions?: Maybe<Sessions_Mutation_Response>;
   /** delete single row from the table: "sessions" */
@@ -499,10 +650,10 @@ export type Mutation_Root = {
   insert_accounts?: Maybe<Accounts_Mutation_Response>;
   /** insert a single row into the table: "accounts" */
   insert_accounts_one?: Maybe<Accounts>;
-  /** insert data into the table: "feeds" */
-  insert_feeds?: Maybe<Feeds_Mutation_Response>;
-  /** insert a single row into the table: "feeds" */
-  insert_feeds_one?: Maybe<Feeds>;
+  /** insert data into the table: "games" */
+  insert_games?: Maybe<Games_Mutation_Response>;
+  /** insert a single row into the table: "games" */
+  insert_games_one?: Maybe<Games>;
   /** insert data into the table: "sessions" */
   insert_sessions?: Maybe<Sessions_Mutation_Response>;
   /** insert a single row into the table: "sessions" */
@@ -519,10 +670,10 @@ export type Mutation_Root = {
   update_accounts?: Maybe<Accounts_Mutation_Response>;
   /** update single row of the table: "accounts" */
   update_accounts_by_pk?: Maybe<Accounts>;
-  /** update data of the table: "feeds" */
-  update_feeds?: Maybe<Feeds_Mutation_Response>;
-  /** update single row of the table: "feeds" */
-  update_feeds_by_pk?: Maybe<Feeds>;
+  /** update data of the table: "games" */
+  update_games?: Maybe<Games_Mutation_Response>;
+  /** update single row of the table: "games" */
+  update_games_by_pk?: Maybe<Games>;
   /** update data of the table: "sessions" */
   update_sessions?: Maybe<Sessions_Mutation_Response>;
   /** update single row of the table: "sessions" */
@@ -548,12 +699,12 @@ export type Mutation_RootDelete_Accounts_By_PkArgs = {
 };
 
 /** mutation root */
-export type Mutation_RootDelete_FeedsArgs = {
-  where: Feeds_Bool_Exp;
+export type Mutation_RootDelete_GamesArgs = {
+  where: Games_Bool_Exp;
 };
 
 /** mutation root */
-export type Mutation_RootDelete_Feeds_By_PkArgs = {
+export type Mutation_RootDelete_Games_By_PkArgs = {
   id: Scalars["uuid"];
 };
 
@@ -600,15 +751,15 @@ export type Mutation_RootInsert_Accounts_OneArgs = {
 };
 
 /** mutation root */
-export type Mutation_RootInsert_FeedsArgs = {
-  objects: Array<Feeds_Insert_Input>;
-  on_conflict?: Maybe<Feeds_On_Conflict>;
+export type Mutation_RootInsert_GamesArgs = {
+  objects: Array<Games_Insert_Input>;
+  on_conflict?: Maybe<Games_On_Conflict>;
 };
 
 /** mutation root */
-export type Mutation_RootInsert_Feeds_OneArgs = {
-  object: Feeds_Insert_Input;
-  on_conflict?: Maybe<Feeds_On_Conflict>;
+export type Mutation_RootInsert_Games_OneArgs = {
+  object: Games_Insert_Input;
+  on_conflict?: Maybe<Games_On_Conflict>;
 };
 
 /** mutation root */
@@ -660,15 +811,17 @@ export type Mutation_RootUpdate_Accounts_By_PkArgs = {
 };
 
 /** mutation root */
-export type Mutation_RootUpdate_FeedsArgs = {
-  _set?: Maybe<Feeds_Set_Input>;
-  where: Feeds_Bool_Exp;
+export type Mutation_RootUpdate_GamesArgs = {
+  _inc?: Maybe<Games_Inc_Input>;
+  _set?: Maybe<Games_Set_Input>;
+  where: Games_Bool_Exp;
 };
 
 /** mutation root */
-export type Mutation_RootUpdate_Feeds_By_PkArgs = {
-  _set?: Maybe<Feeds_Set_Input>;
-  pk_columns: Feeds_Pk_Columns_Input;
+export type Mutation_RootUpdate_Games_By_PkArgs = {
+  _inc?: Maybe<Games_Inc_Input>;
+  _set?: Maybe<Games_Set_Input>;
+  pk_columns: Games_Pk_Columns_Input;
 };
 
 /** mutation root */
@@ -733,12 +886,12 @@ export type Query_Root = {
   accounts_aggregate: Accounts_Aggregate;
   /** fetch data from the table: "accounts" using primary key columns */
   accounts_by_pk?: Maybe<Accounts>;
-  /** An array relationship */
-  feeds: Array<Feeds>;
+  /** fetch data from the table: "games" */
+  games: Array<Games>;
   /** An aggregate relationship */
-  feeds_aggregate: Feeds_Aggregate;
-  /** fetch data from the table: "feeds" using primary key columns */
-  feeds_by_pk?: Maybe<Feeds>;
+  games_aggregate: Games_Aggregate;
+  /** fetch data from the table: "games" using primary key columns */
+  games_by_pk?: Maybe<Games>;
   /** fetch data from the table: "sessions" */
   sessions: Array<Sessions>;
   /** fetch aggregated fields from the table: "sessions" */
@@ -779,23 +932,23 @@ export type Query_RootAccounts_By_PkArgs = {
   id: Scalars["uuid"];
 };
 
-export type Query_RootFeedsArgs = {
-  distinct_on?: Maybe<Array<Feeds_Select_Column>>;
+export type Query_RootGamesArgs = {
+  distinct_on?: Maybe<Array<Games_Select_Column>>;
   limit?: Maybe<Scalars["Int"]>;
   offset?: Maybe<Scalars["Int"]>;
-  order_by?: Maybe<Array<Feeds_Order_By>>;
-  where?: Maybe<Feeds_Bool_Exp>;
+  order_by?: Maybe<Array<Games_Order_By>>;
+  where?: Maybe<Games_Bool_Exp>;
 };
 
-export type Query_RootFeeds_AggregateArgs = {
-  distinct_on?: Maybe<Array<Feeds_Select_Column>>;
+export type Query_RootGames_AggregateArgs = {
+  distinct_on?: Maybe<Array<Games_Select_Column>>;
   limit?: Maybe<Scalars["Int"]>;
   offset?: Maybe<Scalars["Int"]>;
-  order_by?: Maybe<Array<Feeds_Order_By>>;
-  where?: Maybe<Feeds_Bool_Exp>;
+  order_by?: Maybe<Array<Games_Order_By>>;
+  where?: Maybe<Games_Bool_Exp>;
 };
 
-export type Query_RootFeeds_By_PkArgs = {
+export type Query_RootGames_By_PkArgs = {
   id: Scalars["uuid"];
 };
 
@@ -1095,12 +1248,12 @@ export type Subscription_Root = {
   accounts_aggregate: Accounts_Aggregate;
   /** fetch data from the table: "accounts" using primary key columns */
   accounts_by_pk?: Maybe<Accounts>;
-  /** An array relationship */
-  feeds: Array<Feeds>;
+  /** fetch data from the table: "games" */
+  games: Array<Games>;
   /** An aggregate relationship */
-  feeds_aggregate: Feeds_Aggregate;
-  /** fetch data from the table: "feeds" using primary key columns */
-  feeds_by_pk?: Maybe<Feeds>;
+  games_aggregate: Games_Aggregate;
+  /** fetch data from the table: "games" using primary key columns */
+  games_by_pk?: Maybe<Games>;
   /** fetch data from the table: "sessions" */
   sessions: Array<Sessions>;
   /** fetch aggregated fields from the table: "sessions" */
@@ -1141,23 +1294,23 @@ export type Subscription_RootAccounts_By_PkArgs = {
   id: Scalars["uuid"];
 };
 
-export type Subscription_RootFeedsArgs = {
-  distinct_on?: Maybe<Array<Feeds_Select_Column>>;
+export type Subscription_RootGamesArgs = {
+  distinct_on?: Maybe<Array<Games_Select_Column>>;
   limit?: Maybe<Scalars["Int"]>;
   offset?: Maybe<Scalars["Int"]>;
-  order_by?: Maybe<Array<Feeds_Order_By>>;
-  where?: Maybe<Feeds_Bool_Exp>;
+  order_by?: Maybe<Array<Games_Order_By>>;
+  where?: Maybe<Games_Bool_Exp>;
 };
 
-export type Subscription_RootFeeds_AggregateArgs = {
-  distinct_on?: Maybe<Array<Feeds_Select_Column>>;
+export type Subscription_RootGames_AggregateArgs = {
+  distinct_on?: Maybe<Array<Games_Select_Column>>;
   limit?: Maybe<Scalars["Int"]>;
   offset?: Maybe<Scalars["Int"]>;
-  order_by?: Maybe<Array<Feeds_Order_By>>;
-  where?: Maybe<Feeds_Bool_Exp>;
+  order_by?: Maybe<Array<Games_Order_By>>;
+  where?: Maybe<Games_Bool_Exp>;
 };
 
-export type Subscription_RootFeeds_By_PkArgs = {
+export type Subscription_RootGames_By_PkArgs = {
   id: Scalars["uuid"];
 };
 
@@ -1240,10 +1393,10 @@ export type Users = {
   created_at: Scalars["timestamptz"];
   email: Scalars["String"];
   email_verified?: Maybe<Scalars["timestamptz"]>;
-  /** An array relationship */
-  feeds: Array<Feeds>;
+  /** fetch data from the table: "games" */
+  games: Array<Games>;
   /** An aggregate relationship */
-  feeds_aggregate: Feeds_Aggregate;
+  games_aggregate: Games_Aggregate;
   id: Scalars["uuid"];
   image?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
@@ -1251,21 +1404,21 @@ export type Users = {
 };
 
 /** columns and relationships of "users" */
-export type UsersFeedsArgs = {
-  distinct_on?: Maybe<Array<Feeds_Select_Column>>;
+export type UsersGamesArgs = {
+  distinct_on?: Maybe<Array<Games_Select_Column>>;
   limit?: Maybe<Scalars["Int"]>;
   offset?: Maybe<Scalars["Int"]>;
-  order_by?: Maybe<Array<Feeds_Order_By>>;
-  where?: Maybe<Feeds_Bool_Exp>;
+  order_by?: Maybe<Array<Games_Order_By>>;
+  where?: Maybe<Games_Bool_Exp>;
 };
 
 /** columns and relationships of "users" */
-export type UsersFeeds_AggregateArgs = {
-  distinct_on?: Maybe<Array<Feeds_Select_Column>>;
+export type UsersGames_AggregateArgs = {
+  distinct_on?: Maybe<Array<Games_Select_Column>>;
   limit?: Maybe<Scalars["Int"]>;
   offset?: Maybe<Scalars["Int"]>;
-  order_by?: Maybe<Array<Feeds_Order_By>>;
-  where?: Maybe<Feeds_Bool_Exp>;
+  order_by?: Maybe<Array<Games_Order_By>>;
+  where?: Maybe<Games_Bool_Exp>;
 };
 
 /** aggregated selection of "users" */
@@ -1297,7 +1450,7 @@ export type Users_Bool_Exp = {
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   email?: Maybe<String_Comparison_Exp>;
   email_verified?: Maybe<Timestamptz_Comparison_Exp>;
-  feeds?: Maybe<Feeds_Bool_Exp>;
+  games?: Maybe<Games_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   image?: Maybe<String_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
@@ -1315,7 +1468,7 @@ export type Users_Insert_Input = {
   created_at?: Maybe<Scalars["timestamptz"]>;
   email?: Maybe<Scalars["String"]>;
   email_verified?: Maybe<Scalars["timestamptz"]>;
-  feeds?: Maybe<Feeds_Arr_Rel_Insert_Input>;
+  games?: Maybe<Games_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars["uuid"]>;
   image?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
@@ -1374,7 +1527,7 @@ export type Users_Order_By = {
   created_at?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
   email_verified?: Maybe<Order_By>;
-  feeds_aggregate?: Maybe<Feeds_Aggregate_Order_By>;
+  games_aggregate?: Maybe<Games_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
@@ -1602,13 +1755,17 @@ export enum Verification_Requests_Update_Column {
   UpdatedAt = "updated_at",
 }
 
-export type InsertFeedMutationVariables = Exact<{
-  author_id: Scalars["uuid"];
-  body?: Maybe<Scalars["String"]>;
+export type InsertGameMutationVariables = Exact<{
+  user_id: Scalars["uuid"];
+  name: Scalars["String"];
+  bgg_id: Scalars["Int"];
+  description?: Maybe<Scalars["String"]>;
+  image?: Maybe<Scalars["String"]>;
 }>;
 
-export type InsertFeedMutation = { __typename?: "mutation_root" } & {
-  insert_feeds_one?: Maybe<{ __typename?: "feeds" } & Pick<Feeds, "id">>;
+export type InsertGameMutation = {
+  __typename?: "mutation_root";
+  insert_games_one?: Maybe<{ __typename?: "games"; id: any }>;
 };
 
 export type UpdateUserMutationVariables = Exact<{
@@ -1616,134 +1773,160 @@ export type UpdateUserMutationVariables = Exact<{
   name?: Maybe<Scalars["String"]>;
 }>;
 
-export type UpdateUserMutation = { __typename?: "mutation_root" } & {
-  update_users?: Maybe<
-    { __typename?: "users_mutation_response" } & {
-      returning: Array<{ __typename?: "users" } & Pick<Users, "id" | "name">>;
-    }
-  >;
+export type UpdateUserMutation = {
+  __typename?: "mutation_root";
+  update_users?: Maybe<{
+    __typename?: "users_mutation_response";
+    returning: Array<{ __typename?: "users"; id: any; name?: Maybe<string> }>;
+  }>;
 };
 
 export type FetchUserQueryVariables = Exact<{
   userId: Scalars["uuid"];
 }>;
 
-export type FetchUserQuery = { __typename?: "query_root" } & {
-  users_by_pk?: Maybe<{ __typename?: "users" } & Pick<Users, "id" | "name">>;
+export type FetchUserQuery = {
+  __typename?: "query_root";
+  users_by_pk?: Maybe<{ __typename?: "users"; id: any; name?: Maybe<string> }>;
 };
 
-export type FetchFeedsSubscriptionVariables = Exact<{ [key: string]: never }>;
+export type FetchGamesSubscriptionVariables = Exact<{ [key: string]: never }>;
 
-export type FetchFeedsSubscription = { __typename?: "subscription_root" } & {
-  feeds: Array<
-    { __typename?: "feeds" } & Pick<Feeds, "id" | "created_at" | "body"> & {
-        author?: Maybe<
-          { __typename?: "users" } & Pick<Users, "id" | "name" | "image">
-        >;
+export type FetchGamesSubscription = {
+  __typename?: "subscription_root";
+  games: Array<{
+    __typename?: "games";
+    id: any;
+    created_at: string;
+    name: string;
+    image?: Maybe<string>;
+    bgg_id: number;
+    description?: Maybe<string>;
+    user?: Maybe<{
+      __typename?: "users";
+      id: any;
+      name?: Maybe<string>;
+      image?: Maybe<string>;
+    }>;
+  }>;
+};
+
+export const InsertGameDocument = gql`
+  mutation insertGame(
+    $user_id: uuid!
+    $name: String!
+    $bgg_id: Int!
+    $description: String
+    $image: String
+  ) {
+    insert_games_one(
+      object: {
+        user_id: $user_id
+        name: $name
+        bgg_id: $bgg_id
+        description: $description
+        image: $image
       }
-  >;
-};
-
-export const InsertFeedDocument = gql`
-  mutation insertFeed($author_id: uuid!, $body: String) {
-    insert_feeds_one(object: { author_id: $author_id, body: $body }) {
+    ) {
       id
     }
   }
 `;
-export type InsertFeedMutationFn = Apollo.MutationFunction<
-  InsertFeedMutation,
-  InsertFeedMutationVariables
+export type InsertGameMutationFn = Apollo.MutationFunction<
+  InsertGameMutation,
+  InsertGameMutationVariables
 >;
-export type InsertFeedComponentProps = Omit<
+export type InsertGameComponentProps = Omit<
   ApolloReactComponents.MutationComponentOptions<
-    InsertFeedMutation,
-    InsertFeedMutationVariables
+    InsertGameMutation,
+    InsertGameMutationVariables
   >,
   "mutation"
 >;
 
-export const InsertFeedComponent = (props: InsertFeedComponentProps) => (
+export const InsertGameComponent = (props: InsertGameComponentProps) => (
   <ApolloReactComponents.Mutation<
-    InsertFeedMutation,
-    InsertFeedMutationVariables
+    InsertGameMutation,
+    InsertGameMutationVariables
   >
-    mutation={InsertFeedDocument}
+    mutation={InsertGameDocument}
     {...props}
   />
 );
 
-export type InsertFeedProps<
+export type InsertGameProps<
   TChildProps = {},
   TDataName extends string = "mutate"
 > = {
   [key in TDataName]: Apollo.MutationFunction<
-    InsertFeedMutation,
-    InsertFeedMutationVariables
+    InsertGameMutation,
+    InsertGameMutationVariables
   >;
-} &
-  TChildProps;
-export function withInsertFeed<
+} & TChildProps;
+export function withInsertGame<
   TProps,
   TChildProps = {},
   TDataName extends string = "mutate"
 >(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
-    InsertFeedMutation,
-    InsertFeedMutationVariables,
-    InsertFeedProps<TChildProps, TDataName>
+    InsertGameMutation,
+    InsertGameMutationVariables,
+    InsertGameProps<TChildProps, TDataName>
   >
 ) {
   return ApolloReactHoc.withMutation<
     TProps,
-    InsertFeedMutation,
-    InsertFeedMutationVariables,
-    InsertFeedProps<TChildProps, TDataName>
-  >(InsertFeedDocument, {
-    alias: "insertFeed",
+    InsertGameMutation,
+    InsertGameMutationVariables,
+    InsertGameProps<TChildProps, TDataName>
+  >(InsertGameDocument, {
+    alias: "insertGame",
     ...operationOptions,
   });
 }
 
 /**
- * __useInsertFeedMutation__
+ * __useInsertGameMutation__
  *
- * To run a mutation, you first call `useInsertFeedMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useInsertFeedMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useInsertGameMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertGameMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [insertFeedMutation, { data, loading, error }] = useInsertFeedMutation({
+ * const [insertGameMutation, { data, loading, error }] = useInsertGameMutation({
  *   variables: {
- *      author_id: // value for 'author_id'
- *      body: // value for 'body'
+ *      user_id: // value for 'user_id'
+ *      name: // value for 'name'
+ *      bgg_id: // value for 'bgg_id'
+ *      description: // value for 'description'
+ *      image: // value for 'image'
  *   },
  * });
  */
-export function useInsertFeedMutation(
+export function useInsertGameMutation(
   baseOptions?: Apollo.MutationHookOptions<
-    InsertFeedMutation,
-    InsertFeedMutationVariables
+    InsertGameMutation,
+    InsertGameMutationVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<InsertFeedMutation, InsertFeedMutationVariables>(
-    InsertFeedDocument,
+  return Apollo.useMutation<InsertGameMutation, InsertGameMutationVariables>(
+    InsertGameDocument,
     options
   );
 }
-export type InsertFeedMutationHookResult = ReturnType<
-  typeof useInsertFeedMutation
+export type InsertGameMutationHookResult = ReturnType<
+  typeof useInsertGameMutation
 >;
-export type InsertFeedMutationResult =
-  Apollo.MutationResult<InsertFeedMutation>;
-export type InsertFeedMutationOptions = Apollo.BaseMutationOptions<
-  InsertFeedMutation,
-  InsertFeedMutationVariables
+export type InsertGameMutationResult =
+  Apollo.MutationResult<InsertGameMutation>;
+export type InsertGameMutationOptions = Apollo.BaseMutationOptions<
+  InsertGameMutation,
+  InsertGameMutationVariables
 >;
 export const UpdateUserDocument = gql`
   mutation updateUser($userId: uuid!, $name: String) {
@@ -1785,8 +1968,7 @@ export type UpdateUserProps<
     UpdateUserMutation,
     UpdateUserMutationVariables
   >;
-} &
-  TChildProps;
+} & TChildProps;
 export function withUpdateUser<
   TProps,
   TChildProps = {},
@@ -1881,8 +2063,7 @@ export type FetchUserProps<
     FetchUserQuery,
     FetchUserQueryVariables
   >;
-} &
-  TChildProps;
+} & TChildProps;
 export function withFetchUser<
   TProps,
   TChildProps = {},
@@ -1951,13 +2132,16 @@ export type FetchUserQueryResult = Apollo.QueryResult<
   FetchUserQuery,
   FetchUserQueryVariables
 >;
-export const FetchFeedsDocument = gql`
-  subscription fetchFeeds {
-    feeds(order_by: { created_at: desc }) {
+export const FetchGamesDocument = gql`
+  subscription fetchGames {
+    games(order_by: { created_at: desc }) {
       id
       created_at
-      body
-      author {
+      name
+      image
+      bgg_id
+      description
+      user {
         id
         name
         image
@@ -1965,112 +2149,97 @@ export const FetchFeedsDocument = gql`
     }
   }
 `;
-export type FetchFeedsComponentProps = Omit<
+export type FetchGamesComponentProps = Omit<
   ApolloReactComponents.SubscriptionComponentOptions<
-    FetchFeedsSubscription,
-    FetchFeedsSubscriptionVariables
+    FetchGamesSubscription,
+    FetchGamesSubscriptionVariables
   >,
   "subscription"
 >;
 
-export const FetchFeedsComponent = (props: FetchFeedsComponentProps) => (
+export const FetchGamesComponent = (props: FetchGamesComponentProps) => (
   <ApolloReactComponents.Subscription<
-    FetchFeedsSubscription,
-    FetchFeedsSubscriptionVariables
+    FetchGamesSubscription,
+    FetchGamesSubscriptionVariables
   >
-    subscription={FetchFeedsDocument}
+    subscription={FetchGamesDocument}
     {...props}
   />
 );
 
-export type FetchFeedsProps<
+export type FetchGamesProps<
   TChildProps = {},
   TDataName extends string = "data"
 > = {
   [key in TDataName]: ApolloReactHoc.DataValue<
-    FetchFeedsSubscription,
-    FetchFeedsSubscriptionVariables
+    FetchGamesSubscription,
+    FetchGamesSubscriptionVariables
   >;
-} &
-  TChildProps;
-export function withFetchFeeds<
+} & TChildProps;
+export function withFetchGames<
   TProps,
   TChildProps = {},
   TDataName extends string = "data"
 >(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
-    FetchFeedsSubscription,
-    FetchFeedsSubscriptionVariables,
-    FetchFeedsProps<TChildProps, TDataName>
+    FetchGamesSubscription,
+    FetchGamesSubscriptionVariables,
+    FetchGamesProps<TChildProps, TDataName>
   >
 ) {
   return ApolloReactHoc.withSubscription<
     TProps,
-    FetchFeedsSubscription,
-    FetchFeedsSubscriptionVariables,
-    FetchFeedsProps<TChildProps, TDataName>
-  >(FetchFeedsDocument, {
-    alias: "fetchFeeds",
+    FetchGamesSubscription,
+    FetchGamesSubscriptionVariables,
+    FetchGamesProps<TChildProps, TDataName>
+  >(FetchGamesDocument, {
+    alias: "fetchGames",
     ...operationOptions,
   });
 }
 
 /**
- * __useFetchFeedsSubscription__
+ * __useFetchGamesSubscription__
  *
- * To run a query within a React component, call `useFetchFeedsSubscription` and pass it any options that fit your needs.
- * When your component renders, `useFetchFeedsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useFetchGamesSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useFetchGamesSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useFetchFeedsSubscription({
+ * const { data, loading, error } = useFetchGamesSubscription({
  *   variables: {
  *   },
  * });
  */
-export function useFetchFeedsSubscription(
+export function useFetchGamesSubscription(
   baseOptions?: Apollo.SubscriptionHookOptions<
-    FetchFeedsSubscription,
-    FetchFeedsSubscriptionVariables
+    FetchGamesSubscription,
+    FetchGamesSubscriptionVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useSubscription<
-    FetchFeedsSubscription,
-    FetchFeedsSubscriptionVariables
-  >(FetchFeedsDocument, options);
+    FetchGamesSubscription,
+    FetchGamesSubscriptionVariables
+  >(FetchGamesDocument, options);
 }
-export type FetchFeedsSubscriptionHookResult = ReturnType<
-  typeof useFetchFeedsSubscription
+export type FetchGamesSubscriptionHookResult = ReturnType<
+  typeof useFetchGamesSubscription
 >;
-export type FetchFeedsSubscriptionResult =
-  Apollo.SubscriptionResult<FetchFeedsSubscription>;
+export type FetchGamesSubscriptionResult =
+  Apollo.SubscriptionResult<FetchGamesSubscription>;
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-
-export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  fragment: string;
-  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
-};
-
-export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  selectionSet: string;
-  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
-};
-export type StitchingResolver<TResult, TParent, TContext, TArgs> =
-  | LegacyStitchingResolver<TResult, TParent, TContext, TArgs>
-  | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
 export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
   | ResolverFn<TResult, TParent, TContext, TArgs>
-  | ResolverWithResolve<TResult, TParent, TContext, TArgs>
-  | StitchingResolver<TResult, TParent, TContext, TArgs>;
+  | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -2170,11 +2339,12 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Int_comparison_exp: Int_Comparison_Exp;
-  Int: ResolverTypeWrapper<Scalars["Int"]>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
-  String_comparison_exp: String_Comparison_Exp;
+  Float: ResolverTypeWrapper<Scalars["Float"]>;
+  Int: ResolverTypeWrapper<Scalars["Int"]>;
+  Int_comparison_exp: Int_Comparison_Exp;
   String: ResolverTypeWrapper<Scalars["String"]>;
+  String_comparison_exp: String_Comparison_Exp;
   accounts: ResolverTypeWrapper<Accounts>;
   accounts_aggregate: ResolverTypeWrapper<Accounts_Aggregate>;
   accounts_aggregate_fields: ResolverTypeWrapper<Accounts_Aggregate_Fields>;
@@ -2190,25 +2360,42 @@ export type ResolversTypes = {
   accounts_select_column: Accounts_Select_Column;
   accounts_set_input: Accounts_Set_Input;
   accounts_update_column: Accounts_Update_Column;
-  feeds: ResolverTypeWrapper<Feeds>;
-  feeds_aggregate: ResolverTypeWrapper<Feeds_Aggregate>;
-  feeds_aggregate_fields: ResolverTypeWrapper<Feeds_Aggregate_Fields>;
-  feeds_aggregate_order_by: Feeds_Aggregate_Order_By;
-  feeds_arr_rel_insert_input: Feeds_Arr_Rel_Insert_Input;
-  feeds_bool_exp: Feeds_Bool_Exp;
-  feeds_constraint: Feeds_Constraint;
-  feeds_insert_input: Feeds_Insert_Input;
-  feeds_max_fields: ResolverTypeWrapper<Feeds_Max_Fields>;
-  feeds_max_order_by: Feeds_Max_Order_By;
-  feeds_min_fields: ResolverTypeWrapper<Feeds_Min_Fields>;
-  feeds_min_order_by: Feeds_Min_Order_By;
-  feeds_mutation_response: ResolverTypeWrapper<Feeds_Mutation_Response>;
-  feeds_on_conflict: Feeds_On_Conflict;
-  feeds_order_by: Feeds_Order_By;
-  feeds_pk_columns_input: Feeds_Pk_Columns_Input;
-  feeds_select_column: Feeds_Select_Column;
-  feeds_set_input: Feeds_Set_Input;
-  feeds_update_column: Feeds_Update_Column;
+  games: ResolverTypeWrapper<Games>;
+  games_aggregate: ResolverTypeWrapper<Games_Aggregate>;
+  games_aggregate_fields: ResolverTypeWrapper<Games_Aggregate_Fields>;
+  games_aggregate_order_by: Games_Aggregate_Order_By;
+  games_arr_rel_insert_input: Games_Arr_Rel_Insert_Input;
+  games_avg_fields: ResolverTypeWrapper<Games_Avg_Fields>;
+  games_avg_order_by: Games_Avg_Order_By;
+  games_bool_exp: Games_Bool_Exp;
+  games_constraint: Games_Constraint;
+  games_inc_input: Games_Inc_Input;
+  games_insert_input: Games_Insert_Input;
+  games_max_fields: ResolverTypeWrapper<Games_Max_Fields>;
+  games_max_order_by: Games_Max_Order_By;
+  games_min_fields: ResolverTypeWrapper<Games_Min_Fields>;
+  games_min_order_by: Games_Min_Order_By;
+  games_mutation_response: ResolverTypeWrapper<Games_Mutation_Response>;
+  games_on_conflict: Games_On_Conflict;
+  games_order_by: Games_Order_By;
+  games_pk_columns_input: Games_Pk_Columns_Input;
+  games_select_column: Games_Select_Column;
+  games_set_input: Games_Set_Input;
+  games_stddev_fields: ResolverTypeWrapper<Games_Stddev_Fields>;
+  games_stddev_order_by: Games_Stddev_Order_By;
+  games_stddev_pop_fields: ResolverTypeWrapper<Games_Stddev_Pop_Fields>;
+  games_stddev_pop_order_by: Games_Stddev_Pop_Order_By;
+  games_stddev_samp_fields: ResolverTypeWrapper<Games_Stddev_Samp_Fields>;
+  games_stddev_samp_order_by: Games_Stddev_Samp_Order_By;
+  games_sum_fields: ResolverTypeWrapper<Games_Sum_Fields>;
+  games_sum_order_by: Games_Sum_Order_By;
+  games_update_column: Games_Update_Column;
+  games_var_pop_fields: ResolverTypeWrapper<Games_Var_Pop_Fields>;
+  games_var_pop_order_by: Games_Var_Pop_Order_By;
+  games_var_samp_fields: ResolverTypeWrapper<Games_Var_Samp_Fields>;
+  games_var_samp_order_by: Games_Var_Samp_Order_By;
+  games_variance_fields: ResolverTypeWrapper<Games_Variance_Fields>;
+  games_variance_order_by: Games_Variance_Order_By;
   mutation_root: ResolverTypeWrapper<{}>;
   order_by: Order_By;
   query_root: ResolverTypeWrapper<{}>;
@@ -2216,7 +2403,6 @@ export type ResolversTypes = {
   sessions_aggregate: ResolverTypeWrapper<Sessions_Aggregate>;
   sessions_aggregate_fields: ResolverTypeWrapper<Sessions_Aggregate_Fields>;
   sessions_avg_fields: ResolverTypeWrapper<Sessions_Avg_Fields>;
-  Float: ResolverTypeWrapper<Scalars["Float"]>;
   sessions_bool_exp: Sessions_Bool_Exp;
   sessions_constraint: Sessions_Constraint;
   sessions_inc_input: Sessions_Inc_Input;
@@ -2277,11 +2463,12 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Int_comparison_exp: Int_Comparison_Exp;
-  Int: Scalars["Int"];
   Boolean: Scalars["Boolean"];
-  String_comparison_exp: String_Comparison_Exp;
+  Float: Scalars["Float"];
+  Int: Scalars["Int"];
+  Int_comparison_exp: Int_Comparison_Exp;
   String: Scalars["String"];
+  String_comparison_exp: String_Comparison_Exp;
   accounts: Accounts;
   accounts_aggregate: Accounts_Aggregate;
   accounts_aggregate_fields: Accounts_Aggregate_Fields;
@@ -2294,29 +2481,45 @@ export type ResolversParentTypes = {
   accounts_order_by: Accounts_Order_By;
   accounts_pk_columns_input: Accounts_Pk_Columns_Input;
   accounts_set_input: Accounts_Set_Input;
-  feeds: Feeds;
-  feeds_aggregate: Feeds_Aggregate;
-  feeds_aggregate_fields: Feeds_Aggregate_Fields;
-  feeds_aggregate_order_by: Feeds_Aggregate_Order_By;
-  feeds_arr_rel_insert_input: Feeds_Arr_Rel_Insert_Input;
-  feeds_bool_exp: Feeds_Bool_Exp;
-  feeds_insert_input: Feeds_Insert_Input;
-  feeds_max_fields: Feeds_Max_Fields;
-  feeds_max_order_by: Feeds_Max_Order_By;
-  feeds_min_fields: Feeds_Min_Fields;
-  feeds_min_order_by: Feeds_Min_Order_By;
-  feeds_mutation_response: Feeds_Mutation_Response;
-  feeds_on_conflict: Feeds_On_Conflict;
-  feeds_order_by: Feeds_Order_By;
-  feeds_pk_columns_input: Feeds_Pk_Columns_Input;
-  feeds_set_input: Feeds_Set_Input;
+  games: Games;
+  games_aggregate: Games_Aggregate;
+  games_aggregate_fields: Games_Aggregate_Fields;
+  games_aggregate_order_by: Games_Aggregate_Order_By;
+  games_arr_rel_insert_input: Games_Arr_Rel_Insert_Input;
+  games_avg_fields: Games_Avg_Fields;
+  games_avg_order_by: Games_Avg_Order_By;
+  games_bool_exp: Games_Bool_Exp;
+  games_inc_input: Games_Inc_Input;
+  games_insert_input: Games_Insert_Input;
+  games_max_fields: Games_Max_Fields;
+  games_max_order_by: Games_Max_Order_By;
+  games_min_fields: Games_Min_Fields;
+  games_min_order_by: Games_Min_Order_By;
+  games_mutation_response: Games_Mutation_Response;
+  games_on_conflict: Games_On_Conflict;
+  games_order_by: Games_Order_By;
+  games_pk_columns_input: Games_Pk_Columns_Input;
+  games_set_input: Games_Set_Input;
+  games_stddev_fields: Games_Stddev_Fields;
+  games_stddev_order_by: Games_Stddev_Order_By;
+  games_stddev_pop_fields: Games_Stddev_Pop_Fields;
+  games_stddev_pop_order_by: Games_Stddev_Pop_Order_By;
+  games_stddev_samp_fields: Games_Stddev_Samp_Fields;
+  games_stddev_samp_order_by: Games_Stddev_Samp_Order_By;
+  games_sum_fields: Games_Sum_Fields;
+  games_sum_order_by: Games_Sum_Order_By;
+  games_var_pop_fields: Games_Var_Pop_Fields;
+  games_var_pop_order_by: Games_Var_Pop_Order_By;
+  games_var_samp_fields: Games_Var_Samp_Fields;
+  games_var_samp_order_by: Games_Var_Samp_Order_By;
+  games_variance_fields: Games_Variance_Fields;
+  games_variance_order_by: Games_Variance_Order_By;
   mutation_root: {};
   query_root: {};
   sessions: Sessions;
   sessions_aggregate: Sessions_Aggregate;
   sessions_aggregate_fields: Sessions_Aggregate_Fields;
   sessions_avg_fields: Sessions_Avg_Fields;
-  Float: Scalars["Float"];
   sessions_bool_exp: Sessions_Bool_Exp;
   sessions_inc_input: Sessions_Inc_Input;
   sessions_insert_input: Sessions_Insert_Input;
@@ -2367,8 +2570,8 @@ export type ResolversParentTypes = {
 };
 
 export type CachedDirectiveArgs = {
-  ttl?: Scalars["Int"];
   refresh?: Scalars["Boolean"];
+  ttl?: Scalars["Int"];
 };
 
 export type CachedDirectiveResolver<
@@ -2569,101 +2772,226 @@ export type Accounts_Mutation_ResponseResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FeedsResolvers<
+export type GamesResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes["feeds"] = ResolversParentTypes["feeds"]
+  ParentType extends ResolversParentTypes["games"] = ResolversParentTypes["games"]
 > = {
-  author?: Resolver<Maybe<ResolversTypes["users"]>, ParentType, ContextType>;
-  author_id?: Resolver<ResolversTypes["uuid"], ParentType, ContextType>;
-  body?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  bgg_id?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   created_at?: Resolver<ResolversTypes["timestamptz"], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes["uuid"], ParentType, ContextType>;
-  updated_at?: Resolver<ResolversTypes["timestamptz"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type Feeds_AggregateResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes["feeds_aggregate"] = ResolversParentTypes["feeds_aggregate"]
-> = {
-  aggregate?: Resolver<
-    Maybe<ResolversTypes["feeds_aggregate_fields"]>,
+  description?: Resolver<
+    Maybe<ResolversTypes["String"]>,
     ParentType,
     ContextType
   >;
-  nodes?: Resolver<Array<ResolversTypes["feeds"]>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["uuid"], ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes["timestamptz"], ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes["users"]>, ParentType, ContextType>;
+  user_id?: Resolver<Maybe<ResolversTypes["uuid"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type Feeds_Aggregate_FieldsResolvers<
+export type Games_AggregateResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes["feeds_aggregate_fields"] = ResolversParentTypes["feeds_aggregate_fields"]
+  ParentType extends ResolversParentTypes["games_aggregate"] = ResolversParentTypes["games_aggregate"]
 > = {
+  aggregate?: Resolver<
+    Maybe<ResolversTypes["games_aggregate_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  nodes?: Resolver<Array<ResolversTypes["games"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Games_Aggregate_FieldsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["games_aggregate_fields"] = ResolversParentTypes["games_aggregate_fields"]
+> = {
+  avg?: Resolver<
+    Maybe<ResolversTypes["games_avg_fields"]>,
+    ParentType,
+    ContextType
+  >;
   count?: Resolver<
     ResolversTypes["Int"],
     ParentType,
     ContextType,
-    RequireFields<Feeds_Aggregate_FieldsCountArgs, never>
+    RequireFields<Games_Aggregate_FieldsCountArgs, never>
   >;
   max?: Resolver<
-    Maybe<ResolversTypes["feeds_max_fields"]>,
+    Maybe<ResolversTypes["games_max_fields"]>,
     ParentType,
     ContextType
   >;
   min?: Resolver<
-    Maybe<ResolversTypes["feeds_min_fields"]>,
+    Maybe<ResolversTypes["games_min_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  stddev?: Resolver<
+    Maybe<ResolversTypes["games_stddev_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  stddev_pop?: Resolver<
+    Maybe<ResolversTypes["games_stddev_pop_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  stddev_samp?: Resolver<
+    Maybe<ResolversTypes["games_stddev_samp_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  sum?: Resolver<
+    Maybe<ResolversTypes["games_sum_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  var_pop?: Resolver<
+    Maybe<ResolversTypes["games_var_pop_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  var_samp?: Resolver<
+    Maybe<ResolversTypes["games_var_samp_fields"]>,
+    ParentType,
+    ContextType
+  >;
+  variance?: Resolver<
+    Maybe<ResolversTypes["games_variance_fields"]>,
     ParentType,
     ContextType
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type Feeds_Max_FieldsResolvers<
+export type Games_Avg_FieldsResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes["feeds_max_fields"] = ResolversParentTypes["feeds_max_fields"]
+  ParentType extends ResolversParentTypes["games_avg_fields"] = ResolversParentTypes["games_avg_fields"]
 > = {
-  author_id?: Resolver<Maybe<ResolversTypes["uuid"]>, ParentType, ContextType>;
-  body?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  bgg_id?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Games_Max_FieldsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["games_max_fields"] = ResolversParentTypes["games_max_fields"]
+> = {
+  bgg_id?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   created_at?: Resolver<
     Maybe<ResolversTypes["timestamptz"]>,
     ParentType,
     ContextType
   >;
+  description?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
   id?: Resolver<Maybe<ResolversTypes["uuid"]>, ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   updated_at?: Resolver<
     Maybe<ResolversTypes["timestamptz"]>,
     ParentType,
     ContextType
   >;
+  user_id?: Resolver<Maybe<ResolversTypes["uuid"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type Feeds_Min_FieldsResolvers<
+export type Games_Min_FieldsResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes["feeds_min_fields"] = ResolversParentTypes["feeds_min_fields"]
+  ParentType extends ResolversParentTypes["games_min_fields"] = ResolversParentTypes["games_min_fields"]
 > = {
-  author_id?: Resolver<Maybe<ResolversTypes["uuid"]>, ParentType, ContextType>;
-  body?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  bgg_id?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   created_at?: Resolver<
     Maybe<ResolversTypes["timestamptz"]>,
     ParentType,
     ContextType
   >;
+  description?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
   id?: Resolver<Maybe<ResolversTypes["uuid"]>, ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   updated_at?: Resolver<
     Maybe<ResolversTypes["timestamptz"]>,
     ParentType,
     ContextType
   >;
+  user_id?: Resolver<Maybe<ResolversTypes["uuid"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type Feeds_Mutation_ResponseResolvers<
+export type Games_Mutation_ResponseResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes["feeds_mutation_response"] = ResolversParentTypes["feeds_mutation_response"]
+  ParentType extends ResolversParentTypes["games_mutation_response"] = ResolversParentTypes["games_mutation_response"]
 > = {
   affected_rows?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  returning?: Resolver<Array<ResolversTypes["feeds"]>, ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes["games"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Games_Stddev_FieldsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["games_stddev_fields"] = ResolversParentTypes["games_stddev_fields"]
+> = {
+  bgg_id?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Games_Stddev_Pop_FieldsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["games_stddev_pop_fields"] = ResolversParentTypes["games_stddev_pop_fields"]
+> = {
+  bgg_id?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Games_Stddev_Samp_FieldsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["games_stddev_samp_fields"] = ResolversParentTypes["games_stddev_samp_fields"]
+> = {
+  bgg_id?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Games_Sum_FieldsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["games_sum_fields"] = ResolversParentTypes["games_sum_fields"]
+> = {
+  bgg_id?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Games_Var_Pop_FieldsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["games_var_pop_fields"] = ResolversParentTypes["games_var_pop_fields"]
+> = {
+  bgg_id?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Games_Var_Samp_FieldsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["games_var_samp_fields"] = ResolversParentTypes["games_var_samp_fields"]
+> = {
+  bgg_id?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Games_Variance_FieldsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["games_variance_fields"] = ResolversParentTypes["games_variance_fields"]
+> = {
+  bgg_id?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -2683,17 +3011,17 @@ export type Mutation_RootResolvers<
     ContextType,
     RequireFields<Mutation_RootDelete_Accounts_By_PkArgs, "id">
   >;
-  delete_feeds?: Resolver<
-    Maybe<ResolversTypes["feeds_mutation_response"]>,
+  delete_games?: Resolver<
+    Maybe<ResolversTypes["games_mutation_response"]>,
     ParentType,
     ContextType,
-    RequireFields<Mutation_RootDelete_FeedsArgs, "where">
+    RequireFields<Mutation_RootDelete_GamesArgs, "where">
   >;
-  delete_feeds_by_pk?: Resolver<
-    Maybe<ResolversTypes["feeds"]>,
+  delete_games_by_pk?: Resolver<
+    Maybe<ResolversTypes["games"]>,
     ParentType,
     ContextType,
-    RequireFields<Mutation_RootDelete_Feeds_By_PkArgs, "id">
+    RequireFields<Mutation_RootDelete_Games_By_PkArgs, "id">
   >;
   delete_sessions?: Resolver<
     Maybe<ResolversTypes["sessions_mutation_response"]>,
@@ -2743,17 +3071,17 @@ export type Mutation_RootResolvers<
     ContextType,
     RequireFields<Mutation_RootInsert_Accounts_OneArgs, "object">
   >;
-  insert_feeds?: Resolver<
-    Maybe<ResolversTypes["feeds_mutation_response"]>,
+  insert_games?: Resolver<
+    Maybe<ResolversTypes["games_mutation_response"]>,
     ParentType,
     ContextType,
-    RequireFields<Mutation_RootInsert_FeedsArgs, "objects">
+    RequireFields<Mutation_RootInsert_GamesArgs, "objects">
   >;
-  insert_feeds_one?: Resolver<
-    Maybe<ResolversTypes["feeds"]>,
+  insert_games_one?: Resolver<
+    Maybe<ResolversTypes["games"]>,
     ParentType,
     ContextType,
-    RequireFields<Mutation_RootInsert_Feeds_OneArgs, "object">
+    RequireFields<Mutation_RootInsert_Games_OneArgs, "object">
   >;
   insert_sessions?: Resolver<
     Maybe<ResolversTypes["sessions_mutation_response"]>,
@@ -2803,17 +3131,17 @@ export type Mutation_RootResolvers<
     ContextType,
     RequireFields<Mutation_RootUpdate_Accounts_By_PkArgs, "pk_columns">
   >;
-  update_feeds?: Resolver<
-    Maybe<ResolversTypes["feeds_mutation_response"]>,
+  update_games?: Resolver<
+    Maybe<ResolversTypes["games_mutation_response"]>,
     ParentType,
     ContextType,
-    RequireFields<Mutation_RootUpdate_FeedsArgs, "where">
+    RequireFields<Mutation_RootUpdate_GamesArgs, "where">
   >;
-  update_feeds_by_pk?: Resolver<
-    Maybe<ResolversTypes["feeds"]>,
+  update_games_by_pk?: Resolver<
+    Maybe<ResolversTypes["games"]>,
     ParentType,
     ContextType,
-    RequireFields<Mutation_RootUpdate_Feeds_By_PkArgs, "pk_columns">
+    RequireFields<Mutation_RootUpdate_Games_By_PkArgs, "pk_columns">
   >;
   update_sessions?: Resolver<
     Maybe<ResolversTypes["sessions_mutation_response"]>,
@@ -2878,23 +3206,23 @@ export type Query_RootResolvers<
     ContextType,
     RequireFields<Query_RootAccounts_By_PkArgs, "id">
   >;
-  feeds?: Resolver<
-    Array<ResolversTypes["feeds"]>,
+  games?: Resolver<
+    Array<ResolversTypes["games"]>,
     ParentType,
     ContextType,
-    RequireFields<Query_RootFeedsArgs, never>
+    RequireFields<Query_RootGamesArgs, never>
   >;
-  feeds_aggregate?: Resolver<
-    ResolversTypes["feeds_aggregate"],
+  games_aggregate?: Resolver<
+    ResolversTypes["games_aggregate"],
     ParentType,
     ContextType,
-    RequireFields<Query_RootFeeds_AggregateArgs, never>
+    RequireFields<Query_RootGames_AggregateArgs, never>
   >;
-  feeds_by_pk?: Resolver<
-    Maybe<ResolversTypes["feeds"]>,
+  games_by_pk?: Resolver<
+    Maybe<ResolversTypes["games"]>,
     ParentType,
     ContextType,
-    RequireFields<Query_RootFeeds_By_PkArgs, "id">
+    RequireFields<Query_RootGames_By_PkArgs, "id">
   >;
   sessions?: Resolver<
     Array<ResolversTypes["sessions"]>,
@@ -3212,26 +3540,26 @@ export type Subscription_RootResolvers<
     ContextType,
     RequireFields<Subscription_RootAccounts_By_PkArgs, "id">
   >;
-  feeds?: SubscriptionResolver<
-    Array<ResolversTypes["feeds"]>,
-    "feeds",
+  games?: SubscriptionResolver<
+    Array<ResolversTypes["games"]>,
+    "games",
     ParentType,
     ContextType,
-    RequireFields<Subscription_RootFeedsArgs, never>
+    RequireFields<Subscription_RootGamesArgs, never>
   >;
-  feeds_aggregate?: SubscriptionResolver<
-    ResolversTypes["feeds_aggregate"],
-    "feeds_aggregate",
+  games_aggregate?: SubscriptionResolver<
+    ResolversTypes["games_aggregate"],
+    "games_aggregate",
     ParentType,
     ContextType,
-    RequireFields<Subscription_RootFeeds_AggregateArgs, never>
+    RequireFields<Subscription_RootGames_AggregateArgs, never>
   >;
-  feeds_by_pk?: SubscriptionResolver<
-    Maybe<ResolversTypes["feeds"]>,
-    "feeds_by_pk",
+  games_by_pk?: SubscriptionResolver<
+    Maybe<ResolversTypes["games"]>,
+    "games_by_pk",
     ParentType,
     ContextType,
-    RequireFields<Subscription_RootFeeds_By_PkArgs, "id">
+    RequireFields<Subscription_RootGames_By_PkArgs, "id">
   >;
   sessions?: SubscriptionResolver<
     Array<ResolversTypes["sessions"]>,
@@ -3314,17 +3642,17 @@ export type UsersResolvers<
     ParentType,
     ContextType
   >;
-  feeds?: Resolver<
-    Array<ResolversTypes["feeds"]>,
+  games?: Resolver<
+    Array<ResolversTypes["games"]>,
     ParentType,
     ContextType,
-    RequireFields<UsersFeedsArgs, never>
+    RequireFields<UsersGamesArgs, never>
   >;
-  feeds_aggregate?: Resolver<
-    ResolversTypes["feeds_aggregate"],
+  games_aggregate?: Resolver<
+    ResolversTypes["games_aggregate"],
     ParentType,
     ContextType,
-    RequireFields<UsersFeeds_AggregateArgs, never>
+    RequireFields<UsersGames_AggregateArgs, never>
   >;
   id?: Resolver<ResolversTypes["uuid"], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
@@ -3566,12 +3894,20 @@ export type Resolvers<ContextType = any> = {
   accounts_max_fields?: Accounts_Max_FieldsResolvers<ContextType>;
   accounts_min_fields?: Accounts_Min_FieldsResolvers<ContextType>;
   accounts_mutation_response?: Accounts_Mutation_ResponseResolvers<ContextType>;
-  feeds?: FeedsResolvers<ContextType>;
-  feeds_aggregate?: Feeds_AggregateResolvers<ContextType>;
-  feeds_aggregate_fields?: Feeds_Aggregate_FieldsResolvers<ContextType>;
-  feeds_max_fields?: Feeds_Max_FieldsResolvers<ContextType>;
-  feeds_min_fields?: Feeds_Min_FieldsResolvers<ContextType>;
-  feeds_mutation_response?: Feeds_Mutation_ResponseResolvers<ContextType>;
+  games?: GamesResolvers<ContextType>;
+  games_aggregate?: Games_AggregateResolvers<ContextType>;
+  games_aggregate_fields?: Games_Aggregate_FieldsResolvers<ContextType>;
+  games_avg_fields?: Games_Avg_FieldsResolvers<ContextType>;
+  games_max_fields?: Games_Max_FieldsResolvers<ContextType>;
+  games_min_fields?: Games_Min_FieldsResolvers<ContextType>;
+  games_mutation_response?: Games_Mutation_ResponseResolvers<ContextType>;
+  games_stddev_fields?: Games_Stddev_FieldsResolvers<ContextType>;
+  games_stddev_pop_fields?: Games_Stddev_Pop_FieldsResolvers<ContextType>;
+  games_stddev_samp_fields?: Games_Stddev_Samp_FieldsResolvers<ContextType>;
+  games_sum_fields?: Games_Sum_FieldsResolvers<ContextType>;
+  games_var_pop_fields?: Games_Var_Pop_FieldsResolvers<ContextType>;
+  games_var_samp_fields?: Games_Var_Samp_FieldsResolvers<ContextType>;
+  games_variance_fields?: Games_Variance_FieldsResolvers<ContextType>;
   mutation_root?: Mutation_RootResolvers<ContextType>;
   query_root?: Query_RootResolvers<ContextType>;
   sessions?: SessionsResolvers<ContextType>;
@@ -3605,18 +3941,6 @@ export type Resolvers<ContextType = any> = {
   verification_requests_mutation_response?: Verification_Requests_Mutation_ResponseResolvers<ContextType>;
 };
 
-/**
- * @deprecated
- * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
- */
-export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 export type DirectiveResolvers<ContextType = any> = {
   cached?: CachedDirectiveResolver<any, any, ContextType>;
 };
-
-/**
- * @deprecated
- * Use "DirectiveResolvers" root object instead. If you wish to get "IDirectiveResolvers", add "typesPrefix: I" to your config.
- */
-export type IDirectiveResolvers<ContextType = any> =
-  DirectiveResolvers<ContextType>;

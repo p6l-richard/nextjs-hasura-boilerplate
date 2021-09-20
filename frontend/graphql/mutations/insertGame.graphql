@@ -1,0 +1,19 @@
+mutation insertGame(
+  $user_id: uuid!
+  $name: String!
+  $bgg_id: Int!
+  $description: String
+  $image: String
+) {
+  insert_games_one(
+    object: {
+      user_id: $user_id
+      name: $name
+      bgg_id: $bgg_id
+      description: $description
+      image: $image
+    }
+  ) {
+    id
+  }
+}
