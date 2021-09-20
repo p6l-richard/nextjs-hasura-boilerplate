@@ -18,7 +18,7 @@ const GamesPage: FC<IProps> = ({ session }) => {
   return (
     <>
       <Head>
-        <title>Games Page</title>
+        <title>My Games Page</title>
       </Head>
       <Page />
     </>

@@ -31,8 +31,8 @@ const Navbar: NextComponentType = () => {
   const linksForAuthenticatedUsers = [
     {
       id: "games",
-      label: "Games",
-      href: "/games",
+      label: "My Games",
+      href: "/my-games",
     },
     {
       id: "myAccount",

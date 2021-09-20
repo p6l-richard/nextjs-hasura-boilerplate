@@ -8,7 +8,6 @@ import IGame from "types/game";
 
 const GamesPageComponent = () => {
   const { data } = useFetchGamesSubscription();
-  console.log("games:", data);
 
   if (!data) {
     return <Loader />;
