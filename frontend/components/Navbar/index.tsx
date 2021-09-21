@@ -22,8 +22,8 @@ const Navbar: NextComponentType = () => {
 
   const linksForAllUsers = [
     {
-      id: "home",
-      label: "Home",
+      id: "hot",
+      label: "Hot Games",
       href: "/",
     },
   ];

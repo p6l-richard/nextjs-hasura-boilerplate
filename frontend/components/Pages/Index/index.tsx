@@ -1,15 +1,63 @@
-import { Box, Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Stack,
+  Text,
+  Link,
+  useColorModeValue,
+  Image,
+  Center,
+} from "@chakra-ui/react";
+import Loader from "components/Loader";
+import { AddIcon, CheckIcon, WarningTwoIcon } from "@chakra-ui/icons";
+
 import { signIn, signOut, useSession } from "next-auth/client";
-import Link from "next/link";
 import React from "react";
-import { getHotGames } from "features/hot-games";
+import { useHotGamesQuery, IHotGame } from "features/hot-games";
+import {
+  useInsertGameMutation,
+  useFetchGamesSubscription,
+} from "generated-graphql";
 
 const IndexPageComponent = () => {
-  const [session] = useSession();
   const heightOfNavbar: string = "74px";
   const containerPadding: string = "1rem";
+  const bg = useColorModeValue("white", "gray.800");
 
-  getHotGames().then((data) => console.log(data));
+  const {
+    data: hotGames,
+    isSuccess: hotGamesSuccess,
+    isLoading: hotGamesLoading,
+    isError: hotGamesError,
+  } = useHotGamesQuery();
+  const [session] = useSession();
+  const {
+    data: { games: myGames } = {},
+    loading: myGamesFetching,
+    error: myGamesError,
+  } = useFetchGamesSubscription();
+
+  const [
+    insertGame,
+    {
+      loading: insertGameFetching,
+      error: insertGameError,
+      data: insertGameData,
+    },
+  ] = useInsertGameMutation();
+
+  const addToMyGames = (game: IHotGame) => {
+    insertGame({
+      variables: {
+        user_id: session.id,
+        name: game.name.value,
+        bgg_id: parseInt(game.id),
+      },
+    });
+  };
+
   const signInButtonNode = () => {
     if (session) {
       return false;
@@ -51,6 +99,39 @@ const IndexPageComponent = () => {
       </Box>
     );
   };
+  const hotGameCards = () => {
+    const isSuccessGames = hotGamesSuccess && Boolean(myGames);
+    const isLoadingGames = hotGamesLoading || myGamesFetching;
+    const isErrorGames = hotGamesError || myGamesError;
+
+    return isSuccessGames ? (
+      hotGames.map((hotGame) => {
+        const myGame = myGames?.find(
+          ({ bgg_id }) => bgg_id === parseInt(hotGame.id)
+        );
+        const isInMyGames =
+          insertGameData?.insert_games_one?.bgg_id === parseInt(hotGame.id) ||
+          !!myGame;
+
+        return cardNode({
+          game: hotGame,
+          onAddClick: addToMyGames,
+          background: bg,
+          status: isInMyGames
+            ? "success"
+            : insertGameFetching || myGamesFetching
+            ? "loading"
+            : insertGameError || myGamesError
+            ? "error"
+            : "idle",
+        });
+      })
+    ) : isLoadingGames ? (
+      <Loader />
+    ) : isErrorGames ? (
+      <>Something went wrong</>
+    ) : null;
+  };
 
   return (
     <Stack>
@@ -60,12 +141,12 @@ const IndexPageComponent = () => {
         alignItems="center"
       >
         <Stack spacing={4} maxW="xl" mx="auto">
-          <Heading textAlign="center">Nextjs Hasura Boilerplate</Heading>
+          <Heading textAlign="center">See the hottest games</Heading>
           <Text fontSize="xl" lineHeight="tall" textAlign="center">
-            Boilerplate for building applications using Hasura and Next.js. This
-            demo application has been built using Chakra UI, NextAuth.js and
-            Apollo.
+            Add them with one click
           </Text>
+          {hotGameCards()}
+
           <Box>
             <Stack isInline align="center" justifyContent="center">
               {signInButtonNode()}
@@ -75,6 +156,99 @@ const IndexPageComponent = () => {
         </Stack>
       </Flex>
     </Stack>
+  );
+};
+
+interface IGameCard {
+  game: IHotGame;
+  onAddClick: (game: IHotGame) => void;
+  status: "loading" | "success" | "error" | "idle";
+  background: "white" | "gray.800";
+}
+const cardNode = ({ game, onAddClick, status, background }: IGameCard) => {
+  return (
+    <Flex
+      p={50}
+      w="full"
+      alignItems="center"
+      justifyContent="center"
+      key={game.id}
+    >
+      <Box bg={background} maxW="lg" borderWidth="1px" rounded="lg">
+        <Link
+          href={`https://boardgamegeek.com/boardgame/${game.id}`}
+          isExternal
+          sx={{
+            "&:hover": { textDecoration: "none" },
+            "&:focus": { outline: "none" },
+          }}
+        >
+          <Center>
+            <Image
+              src={game.thumbnail.value}
+              alt={game.name.value}
+              roundedTop="sm"
+              boxSize="sm"
+            />
+          </Center>
+        </Link>
+        <Box p="6">
+          <Box d="flex" alignItems="center" flexDirection="column">
+            <Box
+              mt="1"
+              fontWeight="semibold"
+              as="h4"
+              lineHeight="tight"
+              isTruncated
+            >
+              {game.name.value}
+            </Box>
+            {game.yearpublished && (
+              <Box
+                mt="1"
+                color="gray.500"
+                fontWeight="semibold"
+                letterSpacing="wide"
+                fontSize="xs"
+              >
+                {game.yearpublished.value}
+              </Box>
+            )}
+            <Box
+              mt="1"
+              color="gray.300"
+              fontWeight="semibold"
+              fontSize="smaller"
+              cursor="pointer"
+            >
+              {status === "success" ? (
+                <Button disabled leftIcon={<CheckIcon />}>
+                  Added to your list
+                </Button>
+              ) : status === "loading" ? (
+                <>
+                  <Loader />
+                </>
+              ) : status === "error" ? (
+                <Button disabled leftIcon={<WarningTwoIcon />}>
+                  Something went wrong
+                </Button>
+              ) : (
+                <Button
+                  onClick={(event) => {
+                    event.preventDefault;
+                    onAddClick(game);
+                  }}
+                  leftIcon={<AddIcon />}
+                >
+                  Add to your list
+                </Button>
+              )}
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Flex>
   );
 };
 
