@@ -2,12 +2,14 @@ import { Box, Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import { signIn, signOut, useSession } from "next-auth/client";
 import Link from "next/link";
 import React from "react";
+import { getHotGames } from "features/hot-games";
 
 const IndexPageComponent = () => {
   const [session] = useSession();
   const heightOfNavbar: string = "74px";
   const containerPadding: string = "1rem";
 
+  getHotGames().then((data) => console.log(data));
   const signInButtonNode = () => {
     if (session) {
       return false;

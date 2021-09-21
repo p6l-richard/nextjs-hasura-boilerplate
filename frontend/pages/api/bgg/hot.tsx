@@ -1,11 +1,5 @@
 import { parseString } from "xml2js";
-interface IHotGame {
-  id: number;
-  rank: number;
-  thumbnail: { value: string };
-  name: { value: string };
-  yearpublished: { value: number };
-}
+import { IHotGame } from "features/hot-games";
 async function parseXml<T>(xmlString: string): Promise<T> {
   return await new Promise((resolve, reject) =>
     parseString(

@@ -17,6 +17,7 @@
     "paths": {
       "*": ["/*"],
       "components/*": ["components/*"],
+      "features/*": ["features/*"],
       "lib/*": ["lib/*"],
       "pages/*": ["pages/*"],
       "types/*": ["types/*"],
