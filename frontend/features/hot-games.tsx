@@ -1,10 +1,11 @@
 import axios from "axios";
+import { useQuery } from "react-query";
 export interface IHotGame {
-  id: number;
-  rank: number;
+  id: string;
+  rank: string;
   thumbnail: { value: string };
   name: { value: string };
-  yearpublished: { value: number };
+  yearpublished?: { value: string };
 }
 export async function getHotGames() {
   const { data } = await axios.get<IHotGame[]>(
@@ -12,5 +13,16 @@ export async function getHotGames() {
   );
   return data;
 }
+export const hotGamesKeys = {
+  all: ["hotGames"] as const,
+  lists: () => [...hotGamesKeys.all, "list"] as const,
+  list: (filters: string) => [...hotGamesKeys.lists(), { filters }] as const,
+};
 
-export {};
+export function useHotGamesQuery<T = IHotGame[]>(
+  select?: (data: IHotGame[]) => T
+) {
+  return useQuery<IHotGame[], Error, T>(hotGamesKeys.lists(), getHotGames, {
+    select,
+  });
+}
