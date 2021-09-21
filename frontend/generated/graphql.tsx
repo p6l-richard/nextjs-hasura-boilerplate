@@ -1765,7 +1765,7 @@ export type InsertGameMutationVariables = Exact<{
 
 export type InsertGameMutation = {
   __typename?: "mutation_root";
-  insert_games_one?: Maybe<{ __typename?: "games"; id: any }>;
+  insert_games_one?: Maybe<{ __typename?: "games"; bgg_id: number }>;
 };
 
 export type UpdateUserMutationVariables = Exact<{
@@ -1828,7 +1828,7 @@ export const InsertGameDocument = gql`
         image: $image
       }
     ) {
-      id
+      bgg_id
     }
   }
 `;
