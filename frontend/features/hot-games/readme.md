@@ -11,8 +11,8 @@ This module enables hot-games interaction:
 
 API:
 
-- [/api/bgg/hot](frontend/pages/api/bgg/hot.ts)
+- [/api/bgg/hot](../../pages/api/bgg/hot.ts)
 
 UI:
 
-- [IndexPageComponent](frontend/components/Pages/Index/index.tsx)
+- [IndexPageComponent](../../components/Pages/Index/index.tsx)

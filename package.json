@@ -6,6 +6,7 @@
   "scripts": {
     "bootstrap": "node scripts/generate-keys.ts && yarn install && cd frontend && yarn install",
     "dev": "docker-compose up -d",
+    "dev:arm64": "docker-compose -f docker-compose.yml -f docker-compose.arm64.yml up -d",
     "release": "release-it"
   },
   "devDependencies": {
