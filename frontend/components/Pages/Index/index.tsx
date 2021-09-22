@@ -52,8 +52,8 @@ const IndexPageComponent = () => {
     insertGame({
       variables: {
         user_id: session.id,
-        name: game.name.value,
-        bgg_id: parseInt(game.id),
+        name: game.name,
+        bgg_id: game.id,
       },
     });
   };
@@ -106,12 +106,9 @@ const IndexPageComponent = () => {
 
     return isSuccessGames ? (
       hotGames.map((hotGame) => {
-        const myGame = myGames?.find(
-          ({ bgg_id }) => bgg_id === parseInt(hotGame.id)
-        );
+        const myGame = myGames?.find(({ bgg_id }) => bgg_id === hotGame.id);
         const isInMyGames =
-          insertGameData?.insert_games_one?.bgg_id === parseInt(hotGame.id) ||
-          !!myGame;
+          insertGameData?.insert_games_one?.bgg_id === hotGame.id || !!myGame;
 
         return cardNode({
           game: hotGame,
@@ -185,8 +182,8 @@ const cardNode = ({ game, onAddClick, status, background }: IGameCard) => {
         >
           <Center>
             <Image
-              src={game.thumbnail.value}
-              alt={game.name.value}
+              src={game.thumbnail}
+              alt={game.name}
               roundedTop="sm"
               boxSize="sm"
             />
@@ -201,7 +198,7 @@ const cardNode = ({ game, onAddClick, status, background }: IGameCard) => {
               lineHeight="tight"
               isTruncated
             >
-              {game.name.value}
+              {game.name}
             </Box>
             {game.yearpublished && (
               <Box
@@ -211,7 +208,7 @@ const cardNode = ({ game, onAddClick, status, background }: IGameCard) => {
                 letterSpacing="wide"
                 fontSize="xs"
               >
-                {game.yearpublished.value}
+                {game.yearpublished}
               </Box>
             )}
             <Box
